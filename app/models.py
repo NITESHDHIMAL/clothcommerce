@@ -1,3 +1,4 @@
+from datetime import datetime
 from distutils.command.upload import upload
 from email import message
 from django.db import models
@@ -85,7 +86,7 @@ class Product(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     stock = models.CharField(choices=STOCK,max_length=200,null=True,blank=True)
     status = models.CharField(choices=STATUS,max_length=200,null=True,blank=True)
-
+    
 
     categories = models.ForeignKey(Categories,on_delete=models.CASCADE,blank=True,null=True)
     subcategories = models.ForeignKey(SubCategories,on_delete=models.CASCADE,blank=True,null=True)
@@ -127,6 +128,35 @@ class Contact(models.Model):
         # return self.cleaned_data['email']
 
 
+class Order(models.Model):
+    image = models.ImageField(upload_to = "Product_Image/order")
+    product = models.CharField(max_length=1000,default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.IntegerField()
+    quantity = models.CharField(max_length=5)
+    total = models.CharField(max_length=1000,default='')
+    address = models.TextField()
+    phone = models.CharField(max_length=10)
+    pincode = models.CharField(max_length=10)
+    date = models.DateTimeField(default=datetime.today)
+    # date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return self.product
+
+
+# blog list
+class Blog_list(models.Model):
+    title = models.CharField(max_length=255)
+    editor = models.CharField(max_length=100)
+    created_date = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to = "Product_Image/blog")
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+ 
 
 
 

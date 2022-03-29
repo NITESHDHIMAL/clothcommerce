@@ -11,6 +11,11 @@ admin.site.register(Price)
 admin.site.register(Filter_Price)
 admin.site.register(Product)
 admin.site.register(Contact)
+admin.site.register(Order)
+admin.site.register(Blog_list)
+
+
+
 
 
 

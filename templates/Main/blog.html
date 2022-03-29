@@ -1,0 +1,54 @@
+{% extends 'Main/base.html' %}
+{% block content %}
+
+
+<div class="col-sm-9">
+    <div class="blog-post-area">
+        <h2 class="title text-center">Latest From our Blog</h2>
+             {% for i in blog %}
+        <div class="single-blog-post">
+            <h3>{{i.title}}</h3>
+            <div class="post-meta">
+                <ul>
+                    <li><i class="fa fa-user"></i> {{i.editor}}</li>
+                    <li><i class="fa fa-calendar"></i>{{i.created_date}}</li>
+                </ul>
+                <span>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                </span>
+            </div>
+            <a href="">
+                <img src="/{{i.image}}" alt="">
+            </a>
+            <p>{{i.description}}</p>
+            <a  class="btn btn-primary" href="">Read More</a>
+        </div>
+            {% endfor %}
+
+
+
+        
+        <div class="pagination-area">
+            <ul class="pagination">
+                <li><a href="" class="active">1</a></li>
+                <li><a href="">2</a></li>
+                <li><a href="">3</a></li>
+                <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
