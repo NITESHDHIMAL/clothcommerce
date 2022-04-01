@@ -19,8 +19,8 @@
                     <div class="product-overlay">
                         <div class="overlay-content">
                             <h2>${{pro.price}}</h2>
-                            <p>{{pro.name}}</p>
-                            <p>{{pro.description}}</p>
+                            <p>{{pro.name|truncatewords:4}}</p>
+                            
                             <a href="{% url 'cart_add' pro.id %}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                         </div>
                     </div>
@@ -37,13 +37,6 @@
         {% endfor %}
 
  
-        
-        <ul class="pagination">
-            <li class="active"><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">&raquo;</a></li>
-        </ul>
     </div><!--features_items-->
 </div>
 

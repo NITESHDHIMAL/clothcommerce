@@ -171,41 +171,41 @@ def contact(request):
     return render(request,'main/contact.html')
 
  
-def register(request):
-	# if request.method == "POST":
-	# 	username = request.POST.get['username']
-	# 	email = request.POST.get['email']
-	# 	password = request.POST.get['password']
-	 
-	# 	if User.objects.filter(username = username).exists():
-	# 		messages.error(request,"The username is already usded.")
-	# 		return redirect('register')
+def signup(request):
+	if request.method == "POST":
+		username = request.POST['username']
+		email = request.POST['email']
+		password = request.POST['password']
+		cpassword = request.POST['cpassword']
 
-	# 	elif User.objects.filter(email = email).exists():
-	# 		messages.error(request,"The email is already used.")
-	# 		return redirect('register')
+ 
+		if password == cpassword:
+			if User.objects.filter(username = username).exists():
+				messages.error(request,"The username is already usded.")
+				return redirect('signup')
 
-	# 	else:
-	# 		user = User.objects.create_user(
-	# 		    username = username,
-	# 			email = email,
-	# 			password = password
-	# 			)
-	# 		user.save()
-	# 		return redirect('index')
+			elif User.objects.filter(email = email).exists():
+				messages.error(request,"The email is already used.")
+				return redirect('signup')
 
-	return render(request,'registration/auth.html')
+			else:
+				user = User.objects.create_user(
+					username = username,
+					email = email,
+					password = password
+					)
+				user.save()
+				return redirect('index')
+
+	return render(request,'registration/signup.html')
 
  
 # from django.contrib.auth import authenticate,login, logout
 
 
-def signup(request):
-    return render(request,'registration/signup.html')
+  
 
-
-
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def cart_add(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
@@ -213,7 +213,7 @@ def cart_add(request, id):
     return redirect("index")
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def item_clear(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
@@ -221,7 +221,7 @@ def item_clear(request, id):
     return redirect("cart_detail")
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def item_increment(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
@@ -229,7 +229,7 @@ def item_increment(request, id):
     return redirect("cart_detail")
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def item_decrement(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
@@ -237,14 +237,14 @@ def item_decrement(request, id):
     return redirect("cart_detail")
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def cart_clear(request):
     cart = Cart(request)
     cart.clear()
     return redirect("cart_detail")
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url="/accounts/login/")
 def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
 
@@ -264,8 +264,6 @@ def checkout(request):
             b = cart[i]['quantity']
             total = a * b
 
-
-
             order = Order(
                 user = user,
                 product = cart[i]['name'],
@@ -284,7 +282,7 @@ def checkout(request):
     return render(request,"cart/checkout.html")
 
 
-
+@login_required(login_url="/accounts/login/")
 def your_order(request):
     uid = request.session.get('_auth_user_id')
     user = User.objects.get(pk = uid) 

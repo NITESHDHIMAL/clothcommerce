@@ -40,8 +40,10 @@ class SmallCategories(models.Model):
 
 
 class SubCategories(models.Model):
+    STATUS = (('active','active'),('','default'))
     name = models.CharField(max_length=200)
     category = models.ForeignKey(Categories,on_delete=models.CASCADE,blank=True,null=True)
+    status = models.CharField(choices=STATUS,max_length=200,null=True,blank=True)
 
 
     def __str__(self):
@@ -81,7 +83,6 @@ class Product(models.Model):
     unique_id = models.CharField(unique=True,max_length=200,null=True,blank=True)
     name = models.CharField(max_length=200,blank=True,null=True)
     price = models.CharField(max_length=200)
-    description = models.CharField(max_length=150)
     image = models.ImageField(upload_to ="Product_Image/product")
     created_date = models.DateTimeField(default=timezone.now)
     stock = models.CharField(choices=STOCK,max_length=200,null=True,blank=True)

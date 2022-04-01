@@ -89,12 +89,10 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="/order/"><i class="fa fa-star"></i>Your Order</a></li>
-								<li><a href="/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<!-- <li><a href="/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li> -->
 								<li><a href="/cart/cart-detail/"><i class="fa fa-shopping-cart"></i> Cart <span class="badge bg-secondary">{{request.session.cart|length}}</span> </a></li>
-								<li><a href="/login"><i class="fa fa-lock"></i> Login</a></li>
-							</ul>
+                            </ul>
 						</div>
 					</div>
 				</div>
@@ -126,11 +124,23 @@
                                 </li> 
 								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
+                                        <li><a href="{% url 'blog' %}">Blog List</a></li>
+										<li><a href="{% url 'blog_single' %$}">Blog Single</a></li>
                                     </ul>
                                 </li> 
 								<li><a href="/contact">Contact</a></li>
+
+                                {% if user.is_authenticated %}
+								<li><a href="accounts/logout/" ><i class="fa fa-arrow-right" aria-hidden="true"></i>Logout</a></li> 
+                                {% else %}
+                                <li class="dropdown"><a href="#">Account<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/signup/"><i class="fa fa-unlock"></i> Signup</a></li>
+                                        <li><a href="/accounts/login/"><i class="fa fa-lock"></i> &nbsp; Login</a></li>
+                                    </ul>
+                                </li> 
+
+							    {% endif %}
 							</ul>
 						</div>
 					</div>
@@ -199,7 +209,7 @@
 							<div class="brands-name">
 								<ul class="nav nav-pills nav-stacked">
                                     {% for i in brand %}
-									<li><a href="/product/?brand={{i.id}}"> <span class="pull-right">(50)</span>{{i.name}}</a></li>
+									<li><a href="/product/?brand={{i.id}}"> <span class="pull-right">{{product|length}}</span>{{i.name}}</a></li>
 								    {% endfor %}
 								</ul>
 							</div>

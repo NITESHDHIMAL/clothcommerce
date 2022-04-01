@@ -1,8 +1,21 @@
 {% extends 'main/base2.html' %}
 {% load cart_tag %}
 {% block navbar %}
+ 
 
+{% if request.session.cart|length < 1 %}
+    <div class="container">
+      <div class="content-404">
+        <img src="images/404/404.png" class="img-responsive" alt="" />
+        <h1><b>OPPS!</b> There are no more items in your cart</h1>
+        <p>Uh... So it looks like you brock something. The page you are looking for has up and Vanished.</p>
+        <h2><a href="{% url 'index' %}">Bring me back Home</a></h2>
+    </div>
+</div>
 
+       
+    {% else %}
+    {% load cart_tag %}
 <section id="cart_items">
     <div class="container">
         <div class="breadcrumbs">
@@ -51,7 +64,6 @@
                             <a class="cart_quantity_delete" href="{% url 'item_clear' key %}"><i class="fa fa-times"></i></a>
                         </td>
                     </tr>
-                    <a href="{% url 'cart_clear' %}">Clear Cart</a>
                     {% endfor %}
                      
                 </tbody>
@@ -68,6 +80,7 @@
                 </tfoot>
             </table>
         </div>
+        <button type="button" class="btn btn-primary" style="margin-left: 90rem;"><a href="{% url 'cart_clear' %}" style="color: white;">Clear Shopping Cart</a></button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" style="float: right;">Chekcout</button>
     </div>
 </section> <!--/#cart_items-->
@@ -107,86 +120,7 @@
     </div>
   </div>
 </div>
-
-
-
-
-<section id="do_action">
-    <div class="container">
-        <div class="heading">
-            <h3>What would you like to do next?</h3>
-            <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="chose_area">
-                    <ul class="user_option">
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Coupon Code</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Use Gift Voucher</label>
-                        </li>
-                        <li>
-                            <input type="checkbox">
-                            <label>Estimate Shipping & Taxes</label>
-                        </li>
-                    </ul>
-                    <ul class="user_info">
-                        <li class="single_field">
-                            <label>Country:</label>
-                            <select>
-                                <option>United States</option>
-                                <option>Bangladesh</option>
-                                <option>UK</option>
-                                <option>India</option>
-                                <option>Pakistan</option>
-                                <option>Ucrane</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-                            
-                        </li>
-                        <li class="single_field">
-                            <label>Region / State:</label>
-                            <select>
-                                <option>Select</option>
-                                <option>Dhaka</option>
-                                <option>London</option>
-                                <option>Dillih</option>
-                                <option>Lahore</option>
-                                <option>Alaska</option>
-                                <option>Canada</option>
-                                <option>Dubai</option>
-                            </select>
-                        
-                        </li>
-                        <li class="single_field zip-field">
-                            <label>Zip Code:</label>
-                            <input type="text">
-                        </li>
-                    </ul>
-                    <a class="btn btn-default update" href="">Get Quotes</a>
-                    <a class="btn btn-default check_out" href="">Continue</a>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="total_area">
-                    <ul>
-                        <li>Cart Sub Total <span>$59</span></li>
-                        <li>Eco Tax <span>$2</span></li>
-                        <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span>$61</span></li>
-                    </ul>
-                        <a class="btn btn-default update" href="">Update</a>
-                        <a class="btn btn-default check_out" href="">Check Out</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!--/#do_action-->
+{% endif %} 
 
 
 {% endblock %}
